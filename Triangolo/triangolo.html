@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangolo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<!--    <link href="bootstrap-5.3.8-dist/css/bootstrap.css" rel="stylesheet">-->
+
+    <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+
+    <div id="app" class="container">
+
+        <div id="header">
+            <h1>Disegna la forma!</h1>
+        </div>
+
+
+        <form action="./action_triangolo.php" method="post">
+
+            <div class="form-label">
+                <input type="text" name="n" placeholder="Inserisci un numero"><br><br>
+            </div>
+
+            <!-- <select name="scelta">
+                 <option selected>Scegli una forma</option>
+                 <option value="triangolo">Triangolo</option>
+                 <option value="quadrato">Quadrato</option>
+                 <option value="triangolo_rovesciato">Triangolo rovesciato</option>
+                 <option value="cornice">Cornice</option>
+             </select> <br><br> -->
+
+            <div id="scelta" class="">
+                <div>
+                    <input type="radio" name="forma" value="triangolo">
+                    <label>Triangolo</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="forma" value="quadrato">
+                    <label>Quadrato</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="forma" value="triangolo_rovesciato">
+                    <label>Triangolo Rovesciato</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="forma" value="cornice">
+                    <label>Cornice</label>
+                </div>
+            </div>
+
+
+            <br>
+
+
+
+            <input type="submit" class="btn btn-primary" value="Submit">
+
+        </form>
+    </div>
+
+
+    <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
