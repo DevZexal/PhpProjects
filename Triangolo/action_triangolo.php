@@ -40,6 +40,7 @@
             <div class="card shadow-lg rounded-4">
                 <div class="card-body p-4">
 
+                    <!-- Titolo -->
                     <h2 class="text-center mb-4" style="color: #ff9900">Risultato</h2>
 
 
