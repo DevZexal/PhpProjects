@@ -32,19 +32,19 @@
 <body class="bg-black">
 
 <!-- Contenitore risposta -->
-<div class="container py-5">
+<div class="container-sm py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
 
             <!-- Card -->
             <div class="card shadow-lg rounded-4">
-                <div class="card-body p-4">
+                <div class="card-body p-5">
 
                     <!-- Titolo -->
                     <h2 class="text-center mb-4" style="color: #ff9900">Risultato</h2>
 
 
-                    <div class="risultato text-center">
+                    <div class="risultato">
                         <?php
                         $n = $_POST["n"];
                         $scelta = $_POST["forma"];
@@ -69,7 +69,7 @@
                             for ($i = 1; $i <= $n; $i++) {
                                 for ($j = 1; $j <= $n; $j++) {
                                     if ($j < $i) {
-                                        echo "&nbsp;&nbsp;";
+                                        echo "&nbsp;";
                                     } else {
                                         echo "*";
                                     }
@@ -91,6 +91,7 @@
                         }
                         ?>
                     </div>
+
 
                     <!-- Bottone torna indietro -->
                     <div class="text-center mt-3">
