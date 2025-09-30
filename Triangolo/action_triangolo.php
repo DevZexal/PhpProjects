@@ -15,7 +15,11 @@
         }
         .risultato {
             font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
         }
+
+
         .btn{
             background-color: #ff9900;
             color: #fff;

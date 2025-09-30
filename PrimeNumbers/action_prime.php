@@ -43,43 +43,45 @@
                     <h2 class="text-center mb-4" style="color: #ff9900">Risultato</h2>
 
                     <div class="risultato text-center">
-                    <?php
-                        function isPrime($num) {
-                                if ($num <= 1) {
-                                    return false;
-                                }
-                                for ($i = 2; $i < $num; $i++) {
-                                    if ($num % $i == 0) {
+                        <?php
+                            function isPrime($num) {
+                                    if ($num <= 1) {
                                         return false;
                                     }
-                                }
+                                    for ($i = 2; $i < $num; $i++) {
+                                        if ($num % $i == 0) {
+                                            return false;
+                                        }
+                                    }
 
-                                return true;
-                        }
-
-                    //    $n = $_POST["n"];
-                        $A = $_POST["A"];
-                        $B = $_POST["B"];
-
-                    //    $n_primi = [];
-
-                        $num = 1;
-                        while($num <= $B){
-                            if($num >= $A) {
-                                if (isPrime($num)) {
-                                    //$n_primi[] = $num;
-                                    echo $num."&nbsp";
-                                }
+                                    return true;
                             }
-                            $num++;
-                        }
 
-                //        for($i = 0; $i < count($n_primi); $i++){
-                //                echo $n_primi[$i]."<br>";
-                //        }
+                        //    $n = $_POST["n"];
+                            $A = $_POST["A"];
+                            $B = $_POST["B"];
+
+                        //    $n_primi = [];
+
+                            $num = 1;
+                            while($num <= $B){
+                                if($num >= $A) {
+                                    if (isPrime($num)) {
+                                        //$n_primi[] = $num;
+                                        echo $num."&nbsp";
+                                    }
+                                }
+                                $num++;
+                            }
+
+                    //        for($i = 0; $i < count($n_primi); $i++){
+                    //                echo $n_primi[$i]."<br>";
+                    //        }
 
 
-                    ?>
+
+
+                        ?>
                     </div>
 
                     <!-- Bottone torna indietro -->
