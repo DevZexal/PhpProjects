@@ -44,33 +44,51 @@
                 ' ' => '|'
             );
 
-    $text = $_POST["text"];
-    $morse = $_POST["morse"];
+    if(!isset($_POST["text"]))
+        $text = "";
 
-    if(isset($_POST["text"])){
-
-        $text = strtolower($text);
+    if(!isset($_POST["morse"]))
         $morse = "";
 
-        for($i = 0; $i < strlen($text); $i++){
-            $morse = $morse.$alfabeto[$text[$i]]." ";
 
+
+    if(isset($_POST["text"]) && isset($_POST["toMorse"])){
+
+        $text = strtolower($_POST["text"]);
+        $morse = "";
+
+        for ($i = 0; $i < strlen($text); $i++) {
+            $char = $text[$i];
+            if (isset($alfabeto[$char])) {
+                $morse .= $alfabeto[$char] . " ";
+            } else {
+                $morse .= "? ";
+            }
         }
 
 
     }
-    else if (isset($_POST["morse"])){
+    else if (isset($_POST["morse"]) && isset($_POST["toText"])){
 
+        $reverse = array_flip($alfabeto);
+        $morse = trim($_POST["morse"]);
 
+        $simboli = explode(" ", $morse);
+        $text = "";
 
+        for ($i = 0; $i < count($simboli); $i++) {
+            $segno = trim($simboli[$i]);
+
+            if ($segno == "|" || $segno == "/") {
+                $text .= " ";
+            } else if (isset($reverse[$segno])) {
+                $text .= $reverse[$segno];
+            } else if ($segno != "") {
+                $text .= "?";
+            }
+        }
 
     }
-
-
-
-
-
-
 
 ?>
 
@@ -95,19 +113,19 @@
                         <!-- Input -->
                         <div class="mb-3">
                             <textarea type="text" class="form-control" name="text"
-                                      placeholder="Inserisci il testo"><?php echo $text;?></textarea>
+                                      placeholder="Inserisci il testo"><?php echo $text?></textarea>
                         </div>
 
 
                         <div class="col">
                             <div class="row btn btn-primary mb-3">
-                                <button type="submit" class="btn">
+                                <button type="submit" name="toMorse" class="btn">
                                     testo -> morse
                                 </button>
                             </div>
 
                             <div class="row btn btn-primary mb-3">
-                                <button type="submit" class="btn">
+                                <button type="submit" name="toText" class="btn">
                                     morse -> testo
                                 </button>
                             </div>
