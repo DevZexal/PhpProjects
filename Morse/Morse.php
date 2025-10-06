@@ -41,7 +41,18 @@
                 'x' => '-..-',
                 'y' => '-.--',
                 'z' => '--..',
-                ' ' => '|'
+                '1' => '.----',
+                '2' => '..---',
+                '3' => '...--',
+                '4' => '....-',
+                '5' => '.....',
+                '6' => '-....',
+                '7' => '--...',
+                '8' => '---..',
+                '9' => '----.',
+                '10' => '-----',
+                ' ' => '|',
+
             );
 
     if(!isset($_POST["text"]))
@@ -104,7 +115,7 @@
                     <!-- Header -->
                     <div id="header" class="text-center mb-2">
                         <h1 class="fw-bold">Morse</h1>
-                        <p class="text-muted">Traduttore da testo in morse</p>
+                        <p class="text-muted">Traduttore da testo in morse e viceversa</p>
                     </div>
 
                     <!-- Form -->
