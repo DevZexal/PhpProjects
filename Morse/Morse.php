@@ -121,13 +121,13 @@
                     <!-- Form -->
                     <form action="Morse.php" method="post">
 
-                        <!-- Input -->
+                        <!-- Input/Output -->
                         <div class="mb-3">
                             <textarea type="text" class="form-control" name="text"
                                       placeholder="Inserisci il testo"><?php echo $text?></textarea>
                         </div>
 
-
+                        <!-- bottoni -->
                         <div class="d-flex justify-content-center gap-3 mb-3">
                             <button type="submit" name="toMorse" class="btn btn-primary px-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
@@ -142,7 +142,7 @@
                             </button>
                         </div>
 
-
+                        <!-- Input/Output -->
                         <div class="mb-3">
                             <textarea type="text" class="form-control text-box" name="morse"
                                    placeholder="Morse"><?php echo $morse;?></textarea>
