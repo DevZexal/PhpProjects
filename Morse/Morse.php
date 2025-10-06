@@ -124,7 +124,7 @@
                         <!-- Input/Output -->
                         <div class="mb-3">
                             <textarea type="text" class="form-control" name="text"
-                                      placeholder="Inserisci il testo"><?php echo $text?></textarea>
+                                      placeholder="Testo"><?php echo $text?></textarea>
                         </div>
 
                         <!-- bottoni -->

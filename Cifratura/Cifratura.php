@@ -22,7 +22,7 @@ if(!isset($_POST['cifratura']))
 if(isset($_POST['text']) && isset($_POST['toMorse'])) {
 
     $text = strtolower($_POST['text']);
-    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 3; // offset predefinito = 3
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : "";
     $cifratura = "";
 
     for ($i = 0; $i < strlen($text); $i++) {
@@ -43,7 +43,7 @@ if(isset($_POST['text']) && isset($_POST['toMorse'])) {
 else if(isset($_POST['cifratura']) && isset($_POST['toText'])) {
 
     $cifratura = strtolower($_POST['cifratura']);
-    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 3; // offset predefinito = 3
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : "";
     $text = "";
 
     for ($i = 0; $i < strlen($cifratura); $i++) {
@@ -82,7 +82,7 @@ else if(isset($_POST['cifratura']) && isset($_POST['toText'])) {
                         <!-- Input -->
                         <div class="mb-3">
                             <textarea type="text" class="form-control" name="text"
-                                      placeholder="Inserisci il testo"><?php echo $text?></textarea>
+                                      placeholder="Inserisci il Testo"><?php echo $text?></textarea>
                         </div>
 
                         <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
