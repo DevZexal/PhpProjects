@@ -96,7 +96,7 @@
 
     <!-- Per centrare tutto -->
     <div class="container row justify-content-center">
-        <div class="col-lg-9 col-md-11">
+        <div class="col-12" style="max-width: 1200px;">
 
             <div class="container card shadow-lg rounded-4 mt-3">
                 <div class="card-body p-5">
