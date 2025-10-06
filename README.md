@@ -40,4 +40,36 @@ tramite un'altra pagina
 
 ------
 
+## TextToMorse
+> La pagina permette di converire un testo in codice morse e viceversa.
 
+<div align="center">
+  <img width="50%" src="images/Morse_page.png">
+</div>
+
+> Una volta premuta la freccia corrispondente al verso di conversione,
+> il risultato viene mostrato nella medesima pagina.
+
+<div align="center">
+  <img width="50%" src="images/Morse_risultato.png">
+</div>
+
+----
+
+
+## Cifrario Di Cesare 
+> La pagina permette di utilizzare la cifratura di cesare inserendo un
+> offset sottoforma di numero.
+
+<div align="center">
+  <img width="50%" src="images/Cifratura_Page.png">
+</div>
+
+> Una volta premuto il bottone "Cripta" o "Decripta" il testo verra
+> mostrato nella medesima pagina.
+
+<div align="center">
+  <img width="50%" src="images/Cifratura_risultato.png">
+</div>
+
+---
