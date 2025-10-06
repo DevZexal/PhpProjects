@@ -13,12 +13,51 @@
 
 <?php
 
+if(!isset($_POST['text']))
+    $text = "";
 
-    if(!isset($_POST['text']))
-        $text = "";
+if(!isset($_POST['cifratura']))
+    $cifratura = "";
 
-    if(!isset($_POST['cifratura']))
-        $cifratura = "";
+if(isset($_POST['text']) && isset($_POST['toMorse'])) {
+
+    $text = strtolower($_POST['text']);
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 3; // offset predefinito = 3
+    $cifratura = "";
+
+    for ($i = 0; $i < strlen($text); $i++) {
+        $char = $text[$i];
+
+        // solo lettere alfabetiche
+        if ($char >= 'a' && $char <= 'z') {
+            $pos = ord($char) - ord('a');
+            $nuovaPos = ($pos + $offset) % 26;
+            $cifratura .= chr($nuovaPos + ord('a'));
+        } else {
+            // lascia invariati spazi, numeri e simboli
+            $cifratura .= $char;
+        }
+    }
+}
+
+else if(isset($_POST['cifratura']) && isset($_POST['toText'])) {
+
+    $cifratura = strtolower($_POST['cifratura']);
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 3; // offset predefinito = 3
+    $text = "";
+
+    for ($i = 0; $i < strlen($cifratura); $i++) {
+        $char = $cifratura[$i];
+
+        if ($char >= 'a' && $char <= 'z') {
+            $pos = ord($char) - ord('a');
+            $nuovaPos = ($pos - $offset + 26) % 26;
+            $text .= chr($nuovaPos + ord('a'));
+        } else {
+            $text .= $char;
+        }
+    }
+}
 
 ?>
 
@@ -34,7 +73,7 @@
                     <!-- Header -->
                     <div id="header" class="text-center mb-2">
                         <h1 class="fw-bold">Cifratura di Cesare</h1>
-                        <p class="text-muted">Traduttore da testo in morse e viceversa</p>
+                        <p class="text-muted">Cripta o decripta un testo con un offset personalizzato</p>
                     </div>
 
                     <!-- Form -->
@@ -46,31 +85,24 @@
                                       placeholder="Inserisci il testo"><?php echo $text?></textarea>
                         </div>
 
-
-                        <div class="d-flex justify-content-center gap-3 mb-3">
+                        <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
                             <button type="submit" name="toMorse" class="btn btn-primary px-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
-                                </svg>
+                                Cripta
                             </button>
 
-                            <input type="text" name="offset" class="form-control "style="max-width: 50px;">
-                                <text></text>
-                            </input>
+                            <input type="number" name="offset" class="form-control text-center"
+                                   placeholder="offset" style="max-width: 100px;"
+                                   value="<?php echo isset($_POST['offset']) ? $_POST['offset'] : ""; ?>">
 
                             <button type="submit" name="toText" class="btn btn-secondary px-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
-                                </svg>
+                                Decripta
                             </button>
                         </div>
-
 
                         <div class="mb-3">
                             <textarea type="text" class="form-control text-box" name="cifratura"
-                                   placeholder="Morse"><?php echo $cifratura;?></textarea>
+                                      placeholder="Testo cifrato"><?php echo $cifratura;?></textarea>
                         </div>
-
 
                     </form>
 
@@ -81,8 +113,6 @@
     </div>
 
 </div>
-
-
 
 </body>
 </html>
