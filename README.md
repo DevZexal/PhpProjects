@@ -73,3 +73,17 @@ tramite un'altra pagina
 </div>
 
 ---
+
+## GradeApp
+> La pagina permette di mostrare la media dei voti filtrando la ricerca
+> tramite cognome, classe e materia. 
+
+<div align="center">
+  <img width="100%" src="images/GradeApp.png">
+</div>
+
+> Una volta inseriti i filtri, il risultato viene mostrato a schermo
+
+<div align="center">
+  <img width="100%" src="images/GradeApp_risultato.png">
+</div>
