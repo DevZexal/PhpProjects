@@ -55,9 +55,10 @@
         for($i = 1; $i < count($file); $i++){
             $riga = explode(",", $file[$i]);
 
-            if(isset($cognome) && $cognome != $riga[0]) continue;
-            if(isset($classe) && $classe != $riga[2]) continue;
-            if(isset($materia) && $materia != $riga[3]) continue;
+            if (!empty($cognome) && $cognome != $riga[0]) continue;
+            if (!empty($classe) && $classe != $riga[2]) continue;
+            if (!empty($materia) && $materia != $riga[3]) continue;
+
 
             $somma += $riga[5];
             $count++;
@@ -67,20 +68,22 @@
             $media = $somma / $count;
 
             echo "La media";
-            echo isset($cognome) ? " di $cognome" : "";
-            echo isset($classe) ? " di Classe $classe" : "";
-            echo isset($materia) ? " di $materia" : "";
+            echo (isset($cognome) && $cognome !== "") ? " di $cognome" : "";
+            echo (isset($classe) && $classe !== "")  ? " della Classe $classe" : "";
+            echo (isset($materia) && $materia !== "") ? " di $materia" : "";
             echo " e': " . $media;
         }
 
     }
 
-    $cognome = isset($_POST["cognome"]) ? $_POST["cognome"] : null;
-    $classe  = isset($_POST["classe"])  ? $_POST["classe"]  : null;
-    $materia = isset($_POST["materia"]) ? $_POST["materia"] : null;
+    $cognome = $_POST["cognome"] ?? null;
+    $classe  = $_POST["classe"] ?? null;
+    $materia = $_POST["materia"] ?? null;
 
 
-    calcolaMedia($cognome, $classe, $materia);
+    if($cognome || $classe || $materia){
+        calcolaMedia($cognome, $classe, $materia);
+    }
 
 ?>
 
