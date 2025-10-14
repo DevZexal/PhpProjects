@@ -55,10 +55,9 @@
         for($i = 1; $i < count($file); $i++){
             $riga = explode(",", $file[$i]);
 
-            if (!empty($cognome) && $cognome != $riga[0]) continue;
-            if (!empty($classe) && $classe != $riga[2]) continue;
-            if (!empty($materia) && $materia != $riga[3]) continue;
-
+            if (isset($cognome) && $cognome !== "" && $cognome != $riga[0]) continue;
+            if (isset($classe)  && $classe !== ""  && $classe != $riga[2]) continue;
+            if (isset($materia) && $materia !== "" && $materia != $riga[3]) continue;
 
             $somma += $riga[5];
             $count++;
