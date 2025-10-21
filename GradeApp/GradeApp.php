@@ -8,6 +8,41 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
+
+<?php
+    function getElencoClassi() {
+        $elencoClassi = array();
+        $lines = file("random-grades.csv");
+        // Salto la prima riga (intestazioni)
+        for($i = 1; $i < count($lines); $i++){
+            $row = explode(",", $lines[$i]);
+            $elencoClassi[$row[2]] = 1;
+        }
+        $chiavi = array_keys($elencoClassi);
+        sort($chiavi);
+        return $chiavi;
+    }
+
+    $elencoClassi = getElencoClassi();
+
+
+    function getElencoMaterie() {
+        $elencoMaterie = array();
+        $lines = file("random-grades.csv");
+        // Salto la prima riga (intestazioni)
+        for($i = 1; $i < count($lines); $i++){
+            $row = explode(",", $lines[$i]);
+            $elencoMaterie[$row[3]] = 1;
+        }
+        ksort($elencoMaterie);
+        return array_keys($elencoMaterie);
+    }
+
+    $elencoMaterie = getElencoMaterie();
+
+?>
+
+
 <body class="bg-white">
 
 <div class="container mt-5">
@@ -25,17 +60,41 @@
 
     <div class="col-md-4">
         <label for="classe" class="form-label">Classe</label>
-        <input type="text" name="classe" id="classe" class="form-control"
-               placeholder="Es. 3BIT"
-               value="<?php echo getInput('classe') ?>">
+        <select class="form-select" id="classe" name="classe">
+            <option value="">--Tutte le classi--</option>
+            <?php
+            foreach($elencoClassi as $classe) {
+                $selected = (getInput('classe') == $classe) ? "selected" : "";
+                echo "<option value=\"$classe\" $selected>$classe</option>\n";
+            }
+            ?>
+        </select><br><br>
     </div>
 
     <div class="col-md-4">
         <label for="materia" class="form-label">Materia</label>
-        <input type="text" name="materia" id="materia" class="form-control"
-               placeholder="Es. Matematica"
-               value="<?php echo getInput('materia'); ?>">
+        <select class="form-select" id="disciplina" name="disciplina">
+            <option value="">--Tutte le materie--</option>
+            <?php
+            foreach($elencoMaterie as $materia) {
+                $selected = (getInput('disciplina') == $materia) ? "selected" : "";
+                echo "<option value=\"$materia\" $selected>$materia</option>\n";
+            }
+            ?>
+        </select><br><br>
+
     </div>
+
+    <div class="col-md-4">
+        <label for="raggruppamento" class="form-label">Raggruppa per</label>
+        <select name="raggruppamento" id="raggruppamento" class="form-select">
+            <option value="">-- Seleziona --</option>
+            <option value="studente" <?php if(getInput('raggruppamento') == 'studente') echo 'selected'; ?>>Studente</option>
+            <option value="classe" <?php if(getInput('raggruppamento') == 'classe') echo 'selected'; ?>>Classe</option>
+            <option value="materia" <?php if(getInput('raggruppamento') == 'materia') echo 'selected'; ?>>Materia</option>
+        </select>
+    </div>
+
 
     <div class="col-12 text-end">
         <button type="submit" class="btn btn-primary">Calcola media</button>
@@ -50,13 +109,15 @@
     }
 
     function calcolaMedie($cognome = null, $classe = null, $materia = null){
+
         $file = file("random-grades.csv");
 
         $voti = [];
 
         // Raggruppa i voti filtrati
         for($i = 1; $i < count($file); $i++){
-            $riga = str_getcsv($file[$i], ",", '"', "\\");
+            $riga = str_getcsv($file[$i],  ",", '"', "\\");
+
 
             if ($cognome && $cognome !== "" && $cognome != $riga[0]) continue;
             if ($classe  && $classe !== ""  && $classe != $riga[2]) continue;
@@ -76,6 +137,8 @@
     $cognome = $_POST["cognome"] ?? null;
     $classe  = $_POST["classe"] ?? null;
     $materia = $_POST["materia"] ?? null;
+    $raggruppamento = $_POST["raggruppamento"] ?? null;
+
 
     $voti = [];
 
@@ -86,7 +149,7 @@
             echo "<div class='alert alert-warning'>Nessun dato trovato.</div>";
         } else {
 
-            if($classe && !$cognome){
+            if($raggruppamento === "classe"){
                 echo "<h3 class='mt-4'>Tabella classe: <strong>$classe</strong></h3>";
 
                 // Trova tutte le materie presenti nella classe
@@ -106,7 +169,6 @@
                 }
                 echo "<th>Media Generale</th></tr></thead><tbody>";
 
-                // Righe studenti
                 foreach($voti as $studente => $materie){
                     echo "<tr><td><strong>$studente</strong></td>";
 
@@ -128,8 +190,7 @@
 
                 echo "</tbody></table>";
             }
-
-            else {
+            elseif($raggruppamento === "studente" || $cognome){
                 foreach($voti as $studente => $materie){
                     echo "<h3 class='mt-4'>Studente: <strong>$studente</strong></h3>";
 
@@ -153,6 +214,28 @@
                     echo "<p><strong>Media generale:</strong> " . number_format($mediaGenerale, 2) . "</p>";
                 }
             }
+            elseif($raggruppamento === "materia"){
+                echo "<h3 class='mt-4'>Raggruppamento per materia</h3>";
+                $perMateria = [];
+
+                foreach($voti as $studente => $materie){
+                    foreach($materie as $m => $votiMateria){
+                        $perMateria[$m][$studente] = array_sum($votiMateria) / count($votiMateria);
+                    }
+                }
+
+                echo "<table class='table table-bordered text-center'>";
+                echo "<thead><tr><th>Materia</th><th>Studente</th><th>Media</th></tr></thead><tbody>";
+
+                foreach($perMateria as $m => $studenti){
+                    foreach($studenti as $s => $media){
+                        echo "<tr><td>$m</td><td>$s</td><td>" . number_format($media, 2) . "</td></tr>";
+                    }
+                }
+
+                echo "</tbody></table>";
+            }
+
         }
     }
     ?>
