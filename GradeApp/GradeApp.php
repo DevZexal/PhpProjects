@@ -116,7 +116,7 @@
 
         // Raggruppa i voti filtrati
         for($i = 1; $i < count($file); $i++){
-            $riga = str_getcsv($file[$i],  ",", '"', "\\");
+            $riga = explode(",", $file[$i]);
 
 
             if ($cognome && $cognome !== "" && $cognome != $riga[0]) continue;
