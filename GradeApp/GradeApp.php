@@ -20,21 +20,21 @@
         <label for="cognome" class="form-label">Cognome</label>
         <input type="text" name="cognome" id="cognome" class="form-control"
                placeholder="Inserisci il cognome"
-               value="<?php echo isset($_GET['cognome']) ? $_GET['cognome'] : ''; ?>">
+               value="<?php echo getInput('cognome'); ?>">
     </div>
 
     <div class="col-md-4">
         <label for="classe" class="form-label">Classe</label>
         <input type="text" name="classe" id="classe" class="form-control"
                placeholder="Es. 3BIT"
-               value="<?php echo isset($_GET['classe']) ? $_GET['classe'] : ''; ?>">
+               value="<?php echo getInput('classe') ?>">
     </div>
 
     <div class="col-md-4">
         <label for="materia" class="form-label">Materia</label>
         <input type="text" name="materia" id="materia" class="form-control"
                placeholder="Es. Matematica"
-               value="<?php echo isset($_GET['materia']) ? $_GET['materia'] : ''; ?>">
+               value="<?php echo getInput('materia'); ?>">
     </div>
 
     <div class="col-12 text-end">
@@ -43,47 +43,72 @@
     </div>
 </form>
 
-<?php
+    <?php
 
-    function calcolaMedia($cognome = null, $classe = null, $materia = null){
-        $somma = 0;
-        $count = 0;
-        $media = 0;
+    function getInput($name){
+        return isset($_POST[$name]) ? $_POST[$name] : null;
+    }
 
+    function calcolaMedie($cognome = null, $classe = null, $materia = null){
         $file = file("random-grades.csv");
+        $header = str_getcsv($file[0], ",", '"', "\\");
+
+        $voti = [];
+
+        // Raggruppa i voti filtrati
         for($i = 1; $i < count($file); $i++){
-            $riga = explode(",", $file[$i]);
+            $riga = str_getcsv($file[$i], ",", '"', "\\");
 
-            if (isset($cognome) && $cognome !== "" && $cognome != $riga[0]) continue;
-            if (isset($classe)  && $classe !== ""  && $classe != $riga[2]) continue;
-            if (isset($materia) && $materia !== "" && $materia != $riga[3]) continue;
+            if ($cognome && $cognome !== "" && $cognome != $riga[0]) continue;
+            if ($classe  && $classe !== ""  && $classe != $riga[2]) continue;
+            if ($materia && $materia !== "" && $materia != $riga[3]) continue;
 
-            $somma += $riga[5];
-            $count++;
+            $studente = $riga[0];
+            $materiaRiga = $riga[3];
+            $voto = (float)$riga[5];
+
+            $voti[$studente][$materiaRiga][] = $voto;
         }
 
-        if($count > 0){
-            $media = $somma / $count;
-
-            echo "La media";
-            echo (isset($cognome) && $cognome !== "") ? " di $cognome" : "";
-            echo (isset($classe) && $classe !== "")  ? " della Classe $classe" : "";
-            echo (isset($materia) && $materia !== "") ? " di $materia" : "";
-            echo " e': " . $media;
-        }
-
+        return $voti;
     }
 
     $cognome = $_POST["cognome"] ?? null;
     $classe  = $_POST["classe"] ?? null;
     $materia = $_POST["materia"] ?? null;
 
-
     if($cognome || $classe || $materia){
-        calcolaMedia($cognome, $classe, $materia);
-    }
+        $voti = calcolaMedie($cognome, $classe, $materia);
 
-?>
+        if(empty($voti)){
+            echo "<div class='alert alert-warning'>Nessun dato trovato.</div>";
+        } else {
+            foreach($voti as $studente => $materie){
+                echo "<h3 class='mt-4'>Studente: <strong>$studente</strong></h3>";
+
+                $sommaGenerale = 0;
+                $countGenerale = 0;
+
+                echo "<table class='table table-striped'>";
+                echo "<thead><tr><th>Materia</th><th>Media</th></tr></thead><tbody>";
+
+                foreach($materie as $nomeMateria => $votiMateria){
+                    $mediaMateria = array_sum($votiMateria) / count($votiMateria);
+                    $sommaGenerale += array_sum($votiMateria);
+                    $countGenerale += count($votiMateria);
+
+                    echo "<tr><td>$nomeMateria</td><td>" . number_format($mediaMateria, 2) . "</td></tr>";
+                }
+
+                echo "</tbody></table>";
+
+                $mediaGenerale = $sommaGenerale / $countGenerale;
+                echo "<p><strong>Media generale:</strong> " . number_format($mediaGenerale, 2) . "</p>";
+            }
+        }
+    }
+    ?>
+
 
 </div>
 
