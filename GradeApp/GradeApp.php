@@ -61,7 +61,7 @@
     <div class="col-md-4">
         <label for="classe" class="form-label">Classe</label>
         <select class="form-select" id="classe" name="classe">
-            <option value="">--Tutte le classi--</option>
+            <option value="">-- Tutte le classi --</option>
             <?php
             foreach($elencoClassi as $classe) {
                 $selected = (getInput('classe') == $classe) ? "selected" : "";
@@ -74,7 +74,7 @@
     <div class="col-md-4">
         <label for="materia" class="form-label">Materia</label>
         <select class="form-select" id="disciplina" name="disciplina">
-            <option value="">--Tutte le materie--</option>
+            <option value="">-- Tutte le materie --</option>
             <?php
             foreach($elencoMaterie as $materia) {
                 $selected = (getInput('disciplina') == $materia) ? "selected" : "";
