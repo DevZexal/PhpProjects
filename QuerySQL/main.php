@@ -94,5 +94,23 @@
     $res->free_result();
 
 
+    # Query 6
+
+    echo "<h2>Query 6</h2>";
+
+    $sql = "SELECT l.Titolo
+            FROM libro l
+            JOIN editore e ON l.idEditore = e.ID
+            JOIN nazione n ON e.nazione = n.ID
+            WHERE n.nome = 'Italia'";
+
+    $res = $cn->query($sql);
+    while ($row = $res->fetch_assoc()) {
+        printText($row['Titolo']);
+    }
+    $res->free_result();
+
+
+
 
 ?>
