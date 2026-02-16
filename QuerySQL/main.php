@@ -19,6 +19,7 @@
     $dataXXX = "2025-01-01";
     $dataYYY = "2025-12-31";
     $stanzaXXX = "Main Hall";
+    $libroXXX = "Divina Commedia";
 
     # Query 1
 
@@ -146,5 +147,23 @@
     }
     $res->free_result();
 
+    # Query 9
+
+    echo "<h2>Query 9</h2>";
+
+    $sql = "SELECT DISTINCT u.Nome, u.Cognome
+            FROM utente u
+            JOIN prestito p ON u.c_f = p.c_f
+            JOIN copia c ON p.Num_copia = c.Numero_copia
+            JOIN libro l ON c.ISBN_LIBRO = l.ISBN
+            WHERE l.Titolo = '$libroXXX'";
+
+    $res = $cn->query($sql);
+    while ($row = $res->fetch_assoc()) {
+        printText("Utente: {$row['Nome']} {$row['Cognome']}");
+    }
+    $res->free_result();
+
     
+
 ?>
