@@ -16,6 +16,8 @@
     # variabili
     $autoreXXX = "Dante";
     $cognomeXXX = "Bianchi";
+    $dataXXX = "2025-01-01";
+    $dataYYY = "2025-12-31";
 
     # Query 1
 
@@ -56,6 +58,20 @@
     }
     $res->free_result();
 
+    # Query 3
 
+    echo "<h2>Query 3</h2>";
+
+    $sql = "SELECT *
+            FROM prestito
+            WHERE Data_prestito BETWEEN '$dataXXX' AND '$dataYYY'";
+
+    $res = $cn->query($sql);
+    while ($row = $res->fetch_assoc()) {
+        printText("Prestito {$row['Num_prestito']} - Data {$row['Data_prestito']}");
+    }
+    $res->free_result();
+
+    
 
 ?>
