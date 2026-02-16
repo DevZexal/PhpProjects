@@ -164,6 +164,41 @@
     }
     $res->free_result();
 
-    
+
+    # Query 10
+
+    echo "<h2>Query 10</h2>";
+
+    $sql = "SELECT 
+            u.Nome, u.Cognome,
+            c.Numero_copia,
+            sc.nome AS Scaffale,
+            ar.nome AS Armadio,
+            st.nome AS Stanza,
+            l.Titolo,
+            au.nome AS NomeAutore,
+            au.cognome AS CognomeAutore,
+            na.nome AS NazioneAutore,
+            e.nome AS Editore,
+            ne.nome AS NazioneEditore
+        FROM prestito p
+        JOIN utente u ON p.c_f = u.c_f
+        JOIN copia c ON p.Num_copia = c.Numero_copia
+        JOIN scaffale sc ON c.Num_scaffale = sc.Num
+        JOIN armadio ar ON sc.ID_Armadio = ar.ID
+        JOIN stanza st ON ar.num_stanza = st.ID
+        JOIN libro l ON c.ISBN_LIBRO = l.ISBN
+        JOIN autore au ON l.id_autore = au.ID
+        JOIN nazione na ON au.id_nazione = na.ID
+        JOIN editore e ON l.idEditore = e.ID
+        JOIN nazione ne ON e.nazione = ne.ID";
+
+    $res = $cn->query($sql);
+    while ($row = $res->fetch_assoc()) {
+        printText("{$row['Nome']} {$row['Cognome']} | Copia {$row['Numero_copia']} | {$row['Titolo']} | {$row['Scaffale']} / {$row['Armadio']} / {$row['Stanza']}");
+    }
+    $res->free_result();
+
+    $cn->close();
 
 ?>
