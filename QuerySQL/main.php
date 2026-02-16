@@ -129,5 +129,22 @@
     }
     $res->free_result();
 
+
+    # Query 8
+
+    echo "<h2>Query 8</h2>";
+
+    $sql = "SELECT DISTINCT a.nome, a.cognome
+            FROM autore a
+            JOIN libro l ON a.ID = l.id_autore
+            JOIN editore e ON l.idEditore = e.ID
+            WHERE a.id_nazione = e.nazione";
+
+    $res = $cn->query($sql);
+    while ($row = $res->fetch_assoc()) {
+        printText("Autore: {$row['nome']} {$row['cognome']}");
+    }
+    $res->free_result();
+
     
 ?>
