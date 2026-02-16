@@ -72,6 +72,27 @@
     }
     $res->free_result();
 
-    
+    # Query 4
+
+    echo "<h2>Query 4</h2>";
+
+    $sql = "SELECT DISTINCT a.nome, a.cognome
+            FROM autore a
+            JOIN libro l1 ON a.ID = l1.id_autore
+            JOIN libro l2 ON a.ID = l2.id_autore AND l1.ISBN <> l2.ISBN
+            JOIN librogenere lg1 ON l1.ISBN = lg1.idLibro
+            JOIN librogenere lg2 ON l2.ISBN = lg2.idLibro
+            JOIN genere g1 ON lg1.idGenere = g1.ID
+            JOIN genere g2 ON lg2.idGenere = g2.ID
+            WHERE g1.nome = 'Fantasy'
+              AND g2.nome = 'Fantasy'";
+
+    $res = $cn->query($sql);
+    while ($row = $res->fetch_assoc()) {
+        printText("Autore: {$row['nome']} {$row['cognome']}");
+    }
+    $res->free_result();
+
+
 
 ?>
