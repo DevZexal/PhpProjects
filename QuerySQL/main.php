@@ -18,6 +18,7 @@
     $cognomeXXX = "Bianchi";
     $dataXXX = "2025-01-01";
     $dataYYY = "2025-12-31";
+    $stanzaXXX = "Main Hall";
 
     # Query 1
 
@@ -110,7 +111,23 @@
     }
     $res->free_result();
 
+    # Query 7
 
+    echo "<h2>Query 7</h2>";
 
+    $sql = "SELECT l.Titolo, c.Numero_copia
+            FROM stanza s
+            JOIN armadio a ON s.ID = a.num_stanza
+            JOIN scaffale sc ON a.ID = sc.ID_Armadio
+            JOIN copia c ON sc.Num = c.Num_scaffale
+            JOIN libro l ON c.ISBN_LIBRO = l.ISBN
+            WHERE s.nome = '$stanzaXXX'";
 
+    $res = $cn->query($sql);
+    while ($row = $res->fetch_assoc()) {
+        printText("Libro: {$row['Titolo']} - Copia {$row['Numero_copia']}");
+    }
+    $res->free_result();
+
+    
 ?>
