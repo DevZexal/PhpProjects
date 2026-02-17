@@ -14,12 +14,12 @@
     }
 
     # variabili
-    $autoreXXX = "Dante";
-    $cognomeXXX = "Bianchi";
-    $dataXXX = "2025-01-01";
-    $dataYYY = "2025-12-31";
-    $stanzaXXX = "Main Hall";
-    $libroXXX = "Divina Commedia";
+    $autore = "Dante";
+    $cognome = "Bianchi";
+    $dataInizio = "2025-01-01";
+    $dataFine = "2025-12-31";
+    $stanza = "Main Hall";
+    $libro = "Divina Commedia";
 
     # Query 1
 
@@ -30,7 +30,7 @@
         join libro l on a.ID = l.id_autore
         join librogenere lg on l.ISBN = lg.idLibro
         join genere g on lg.idGenere = g.ID
-        WHERE a.nome = '$autoreXXX'";
+        WHERE a.nome = '$autore'";
 
     $res = $cn->query($sql);
 
@@ -52,7 +52,7 @@
             JOIN prestito p ON u.c_f = p.c_f
             JOIN copia c ON p.Num_copia = c.Numero_copia
             JOIN libro l ON c.ISBN_LIBRO = l.ISBN
-            WHERE u.Cognome = '$cognomeXXX'";
+            WHERE u.Cognome = '$cognome'";
 
     $res = $cn->query($sql);
     while ($row = $res->fetch_assoc()) {
@@ -66,7 +66,7 @@
 
     $sql = "SELECT *
             FROM prestito
-            WHERE Data_prestito BETWEEN '$dataXXX' AND '$dataYYY'";
+            WHERE Data_prestito BETWEEN '$dataInizio' AND '$dataFine'";
 
     $res = $cn->query($sql);
     while ($row = $res->fetch_assoc()) {
@@ -122,7 +122,7 @@
             JOIN scaffale sc ON a.ID = sc.ID_Armadio
             JOIN copia c ON sc.Num = c.Num_scaffale
             JOIN libro l ON c.ISBN_LIBRO = l.ISBN
-            WHERE s.nome = '$stanzaXXX'";
+            WHERE s.nome = '$stanza'";
 
     $res = $cn->query($sql);
     while ($row = $res->fetch_assoc()) {
@@ -156,7 +156,7 @@
             JOIN prestito p ON u.c_f = p.c_f
             JOIN copia c ON p.Num_copia = c.Numero_copia
             JOIN libro l ON c.ISBN_LIBRO = l.ISBN
-            WHERE l.Titolo = '$libroXXX'";
+            WHERE l.Titolo = '$libro'";
 
     $res = $cn->query($sql);
     while ($row = $res->fetch_assoc()) {
